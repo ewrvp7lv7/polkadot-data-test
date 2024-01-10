@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import * as Tabs from "@radix-ui/react-tabs";
 import Layout from '../components/layout';
-import Contact from '../components/form';
+// import Contact from '../components/form';
 
 const TabsDemo = () => {
   const router = useRouter();
@@ -53,7 +53,7 @@ const TabsDemo = () => {
       <Layout> Tab 1 content </Layout>
       </Tabs.Content>
       <Tabs.Content className="bg-yellow-100 px-4 p-2" value="tab2">
-      <Contact>Contact Tab 2 content</Contact>
+      Tab 2 content
       </Tabs.Content>
       <Tabs.Content className="bg-red-100 px-4 p-2" value="tab3">
         Tab 3 content
