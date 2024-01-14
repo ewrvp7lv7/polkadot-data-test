@@ -73,9 +73,9 @@ export async function listBonded(nominatorAddr: string, eraNum: number): Promise
   Object.keys(eraExposures.validators).forEach(key => {
     const value: DeriveEraValidatorExposure = eraExposures.validators[key];
 
-    const filtered2 = value.others.filter((item: PalletStakingIndividualExposure) => item.who.eq(nominatorAddr));
+    const filtered = value.others.filter((item: PalletStakingIndividualExposure) => item.who.eq(nominatorAddr));
 
-    filtered2.forEach((item: PalletStakingIndividualExposure) => {
+    filtered.forEach((item: PalletStakingIndividualExposure) => {
       const dot = toDOT(item.value.toBn(), api.registry.chainDecimals[0]);
       list.push({ address: `${key} : ${dot}` });
     });
@@ -98,7 +98,7 @@ export async function bondedChanges(nominatorAddr: string, eraNum?: number): Pro
   let list: IResult[] = [];
 
 
-  let deep: number = 10;
+  let deep: number = 20;
   let bondedOldEra = new BN(0);
 
   for (let i = 0 as number; i < deep; i++) {
@@ -111,20 +111,21 @@ export async function bondedChanges(nominatorAddr: string, eraNum?: number): Pro
     Object.keys(eraExposures.validators).forEach(key => {
       const value: DeriveEraValidatorExposure = eraExposures.validators[key];
 
-      const filtered2 = value.others.filter((item: PalletStakingIndividualExposure) => item.who.eq(nominatorAddr));
+      const filtered = value.others.filter((item: PalletStakingIndividualExposure) => item.who.eq(nominatorAddr));
 
-      filtered2.forEach((item: PalletStakingIndividualExposure) => {
-        bonded.add(item.value.toBn());
+      filtered.forEach((item: PalletStakingIndividualExposure) => {
+        bonded = bonded.add(item.value.toBn());
+        console.debug(`DOT added:`, item.value.toJSON());
       });
     });
 
-    if (!bonded.eq(bondedOldEra)) {
-      if (!bondedOldEra.isZero()) {
-        const dot = toDOT(bonded, api.registry.chainDecimals[0]);
-        list.push({ address: `${currentEra} : ${dot}` });
-      }
-      bondedOldEra = bonded
-    }
+    // if (!bonded.eq(bondedOldEra)) {
+    //   if (!bondedOldEra.isZero()) {
+    const dot = toDOT(bonded, api.registry.chainDecimals[0]);
+    list.push({ address: `${currentEra} : ${dot}` });
+    //   }
+    //   bondedOldEra = bonded
+    // }
   }
 
   if (!list.length)
