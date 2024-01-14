@@ -98,10 +98,10 @@ export async function bondedChanges(nominatorAddr: string, eraNum?: number): Pro
   let list: IResult[] = [];
 
 
-  let deep: number = 20;
+  let deep: number = 10;
   let bondedOldEra = new BN(0);
 
-  for (let i = 0 as number; i < deep; i++) {
+  for (let i = 0 as number; i <= deep; i++) {
 
     let bonded = new BN(0);
     let currentEra = ae - deep + i;
@@ -119,13 +119,13 @@ export async function bondedChanges(nominatorAddr: string, eraNum?: number): Pro
       });
     });
 
-    // if (!bonded.eq(bondedOldEra)) {
-    //   if (!bondedOldEra.isZero()) {
-    const dot = toDOT(bonded, api.registry.chainDecimals[0]);
-    list.push({ address: `${currentEra} : ${dot}` });
-    //   }
-    //   bondedOldEra = bonded
-    // }
+    if (!bonded.eq(bondedOldEra)) {
+      if (!bondedOldEra.isZero()) {
+        const dot = toDOT(bonded, api.registry.chainDecimals[0]);
+        list.push({ address: `${currentEra} : ${dot}` });
+      }
+      bondedOldEra = bonded
+    }
   }
 
   if (!list.length)
