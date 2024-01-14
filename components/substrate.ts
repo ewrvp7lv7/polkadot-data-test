@@ -116,15 +116,15 @@ export async function bondedChanges(nominatorAddr: string, eraNum?: number): Pro
       filtered2.forEach((item: PalletStakingIndividualExposure) => {
         bonded.add(item.value.toBn());
       });
-
-      if (!bonded.eq(bondedOldEra)) {
-        if (!bondedOldEra.isZero()) {
-          const dot = toDOT(bonded, api.registry.chainDecimals[0]);
-          list.push({ address: `${currentEra} : ${dot}` });
-        }
-        bondedOldEra = bonded
-      }
     });
+
+    if (!bonded.eq(bondedOldEra)) {
+      if (!bondedOldEra.isZero()) {
+        const dot = toDOT(bonded, api.registry.chainDecimals[0]);
+        list.push({ address: `${currentEra} : ${dot}` });
+      }
+      bondedOldEra = bonded
+    }
   }
 
   if (!list.length)
