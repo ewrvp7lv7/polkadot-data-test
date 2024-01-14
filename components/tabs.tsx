@@ -64,7 +64,7 @@ export const TabsDemo = () => {
         <AddressForm value="tab0" caption="Validators list which nominator delegated" />
       </Tabs.Content>
       <Tabs.Content className="px-4 p-2" value="tab1">
-        <AddressForm value="tab1" caption="Validators which worked in the era by the nominator" />
+        <AddressForm value="tab1" caption="Validators which worked in the era with the nominator" />
       </Tabs.Content>
       <Tabs.Content className="px-4 p-2" value="tab2">
         <AddressForm value="tab2" caption="Bonded balances by the nominator (Validator : Value)" />
