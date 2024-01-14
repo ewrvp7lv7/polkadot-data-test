@@ -5,6 +5,13 @@ import { activeEra } from '../components/substrate';
 export default function Home() {
   const [activeEraState, setActiveEraState] = React.useState(0);
 
+  React.useEffect(() => {
+    (async () => {
+      setActiveEraState(await activeEra());
+      console.debug(`State updated`);
+    })()
+  }, []);
+
   return (
     <div className="bg-white h-full p-2">
       <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
