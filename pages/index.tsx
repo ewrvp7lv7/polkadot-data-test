@@ -5,7 +5,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 const TabsDemo = () => {
   const router = useRouter();
   const initialTab = router.query.tab as string;
-  const [activeTab, setActiveTab] = React.useState(initialTab || "tab1");
+  const [activeTab, setActiveTab] = React.useState(initialTab || "tab0");
 
   const handleTabChange = (value: string) => {
     //update the state
@@ -22,57 +22,57 @@ const TabsDemo = () => {
   return (
     <Tabs.Root
       value={activeTab}
-      defaultValue="tab1"
+      defaultValue="tab0"
       onValueChange={handleTabChange}
       className="border max-w-5xl"
     >
       <Tabs.List className="flex items-center divide-x divide-white border-b border-white">
         <Tabs.Trigger
           className="bg-slate-200 px-4 grow p-2 data-[state=active]:bg-blue-200"
-          value="tab1"
+          value="tab0"
         >
           Delegated validators
         </Tabs.Trigger>
         <Tabs.Trigger
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
-          value="tab2"
+          value="tab1"
         >
           Validators in era
         </Tabs.Trigger>
         <Tabs.Trigger
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
-          value="tab3"
+          value="tab2"
         >
           Bonded
         </Tabs.Trigger>
         <Tabs.Trigger
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
-          value="tab4"
+          value="tab3"
         >
           Changes of bonded
         </Tabs.Trigger>
         <Tabs.Trigger
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
-          value="tab5"
+          value="tab4"
         >
           Reward
         </Tabs.Trigger>
       </Tabs.List>
 
 
-      <Tabs.Content className="bg-green-100 px-4 p-2" value="tab1">
+      <Tabs.Content className="bg-green-100 px-4 p-2" value="tab0">
         Tab 1 content
       </Tabs.Content>
-      <Tabs.Content className="bg-yellow-100 px-4 p-2" value="tab2">
+      <Tabs.Content className="bg-yellow-100 px-4 p-2" value="tab1">
         Tab 2 content
       </Tabs.Content>
-      <Tabs.Content className="bg-blue-100 px-4 p-2" value="tab3">
+      <Tabs.Content className="bg-blue-100 px-4 p-2" value="tab2">
         Tab 3 content
       </Tabs.Content>
-      <Tabs.Content className="bg-red-100 px-4 p-2" value="tab4">
+      <Tabs.Content className="bg-red-100 px-4 p-2" value="tab3">
         Tab 3 content
       </Tabs.Content>
-      <Tabs.Content className="bg-gray-100 px-4 p-2" value="tab5">
+      <Tabs.Content className="bg-gray-100 px-4 p-2" value="tab4">
         Tab 3 content
       </Tabs.Content>
     </Tabs.Root>
