@@ -38,6 +38,9 @@ export async function listValidators(nominatorAddr: string, eraNum?: number): Pr
     list.push({ address: val.toJSON() });
   });
 
+  if (!list.length)
+    list.push({ address: "No data" });
+
   return list;
 }
 
@@ -52,6 +55,9 @@ export async function listValidatorsInEra(nominatorAddr: string, eraNum: number)
   eraExposures.nominators[nominatorAddr].forEach((val) => {
     list.push({ address: val.validatorId });
   });
+
+  if (!list.length)
+    list.push({ address: "No data" });
 
   return list;
 }
@@ -78,6 +84,8 @@ export async function listBonded(nominatorAddr: string, eraNum: number): Promise
     });
   });
 
+  if (!list.length)
+    list.push({ address: "No data" });
 
   return list;
 }
@@ -105,6 +113,9 @@ export async function listRewards(nominatorAddr: string, eraNum: number): Promis
         list.push({ address: `${key} : ${value} (${total})` });
       });
     });
+
+  if (!list.length)
+    list.push({ address: "No data" });
 
   return list;
 }
