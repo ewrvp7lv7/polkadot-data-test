@@ -1,6 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 import * as Tabs from "@radix-ui/react-tabs";
+import { AddressForm, IConfig } from '../components/form';
+import { activeEra } from '../components/substrate';
 
 const TabsDemo = () => {
   const router = useRouter();
@@ -60,7 +62,7 @@ const TabsDemo = () => {
       </Tabs.List>
 
       <Tabs.Content className="px-4 p-2" value="tab0">
-        Tab 0 Content
+        <AddressForm value="tab0" caption="Validators list which nominator delegated" />
       </Tabs.Content>
       <Tabs.Content className="px-4 p-2" value="tab1">
         Tab 0 Content
