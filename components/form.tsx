@@ -29,9 +29,12 @@ export const AddressForm: FunctionComponent<IConfig> = ({
       case "tab2":
         setFields(await Substrate.listBonded(formData.get("nominator") as string, Number(formData.get("era"))));
         break;
-        case "tab4":
-          setFields(await Substrate.listRewards(formData.get("nominator") as string, Number(formData.get("era"))));
-          break;
+      case "tab3":
+        setFields(await Substrate.bondedChanges(formData.get("nominator") as string));
+        break;
+      case "tab4":
+        setFields(await Substrate.listRewards(formData.get("nominator") as string, Number(formData.get("era"))));
+        break;
       default:
         console.debug("No such value exists");
         break;
@@ -47,7 +50,7 @@ export const AddressForm: FunctionComponent<IConfig> = ({
             <label htmlFor="nominator" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nominator address</label>
             <input type="text" id="nominator" name="nominator" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Address" autoComplete="off" required />
           </div>
-          {(value != "tab0") ?
+          {(value != "tab0" && value != "tab3") ?
             <div className="mb-6">
               <label htmlFor="era" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Num of era</label>
               <input type="text" id="era" name="era" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Number" autoComplete="off" required />

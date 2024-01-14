@@ -32,7 +32,7 @@ export async function listValidators(nominatorAddr: string, eraNum?: number): Pr
   const nominatedValidators = await api.query.staking.nominators<Option<Nominations>>(nominatorAddr);
 
 
-  var list: IResult[] = [];
+  let list: IResult[] = [];
 
   nominatedValidators.unwrapOrDefault().targets.forEach((val) => {
     list.push({ address: val.toJSON() });
@@ -50,7 +50,7 @@ export async function listValidatorsInEra(nominatorAddr: string, eraNum: number)
   const api = await ApiPromise.create({ provider: wsProvider });
   const eraExposures: DeriveEraExposure = await api.derive.staking.eraExposure(api.createType('EraIndex', eraNum));
 
-  var list: IResult[] = [];
+  let list: IResult[] = [];
 
   eraExposures.nominators[nominatorAddr].forEach((val) => {
     list.push({ address: val.validatorId });
@@ -68,13 +68,10 @@ export async function listBonded(nominatorAddr: string, eraNum: number): Promise
   const api = await ApiPromise.create({ provider: wsProvider });
   const eraExposures: DeriveEraExposure = await api.derive.staking.eraExposure(api.createType('EraIndex', eraNum));
 
-  var list: IResult[] = [];
+  let list: IResult[] = [];
 
-
-  const validators = eraExposures.validators;
-
-  Object.keys(validators).forEach(key => {
-    const value: DeriveEraValidatorExposure = validators[key];
+  Object.keys(eraExposures.validators).forEach(key => {
+    const value: DeriveEraValidatorExposure = eraExposures.validators[key];
 
     const filtered2 = value.others.filter((item: PalletStakingIndividualExposure) => item.who.eq(nominatorAddr));
 
@@ -83,6 +80,52 @@ export async function listBonded(nominatorAddr: string, eraNum: number): Promise
       list.push({ address: `${key} : ${dot}` });
     });
   });
+
+  if (!list.length)
+    list.push({ address: "No data" });
+
+  return list;
+}
+
+export async function bondedChanges(nominatorAddr: string, eraNum?: number): Promise<IResult[]> {
+
+  const ae = await activeEra();
+
+  const wsProvider = new WsProvider('wss://rpc.polkadot.io');
+  const api = await ApiPromise.create({ provider: wsProvider });
+
+
+  let list: IResult[] = [];
+
+
+  let deep: number = 10;
+  let bondedOldEra = new BN(0);
+
+  for (let i = 0 as number; i < deep; i++) {
+
+    let bonded = new BN(0);
+    let currentEra = ae - deep + i;
+
+    const eraExposures: DeriveEraExposure = await api.derive.staking.eraExposure(api.createType('EraIndex', currentEra));
+
+    Object.keys(eraExposures.validators).forEach(key => {
+      const value: DeriveEraValidatorExposure = eraExposures.validators[key];
+
+      const filtered2 = value.others.filter((item: PalletStakingIndividualExposure) => item.who.eq(nominatorAddr));
+
+      filtered2.forEach((item: PalletStakingIndividualExposure) => {
+        bonded.add(item.value.toBn());
+      });
+
+      if (!bonded.eq(bondedOldEra)) {
+        if (!bondedOldEra.isZero()) {
+          const dot = toDOT(bonded, api.registry.chainDecimals[0]);
+          list.push({ address: `${currentEra} : ${dot}` });
+        }
+        bondedOldEra = bonded
+      }
+    });
+  }
 
   if (!list.length)
     list.push({ address: "No data" });

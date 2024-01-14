@@ -70,7 +70,7 @@ export const TabsDemo = () => {
         <AddressForm value="tab2" caption="Bonded balances by the nominator {Validator : Value}" />
       </Tabs.Content>
       <Tabs.Content className="px-4 p-2" value="tab3">
-        <AddressForm value="tab3" caption="Changes of bonded balances for 5 last eras (not works yet)" />
+        <AddressForm value="tab3" caption="Changes of bonded balances for 10 last eras {Era : New bonded balance})" />
       </Tabs.Content>
       <Tabs.Content className="px-4 p-2" value="tab4">
         <AddressForm value="tab4" caption="Rewards from validators for the era {Validator : Reward (All rewards)}" />
