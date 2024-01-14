@@ -37,7 +37,7 @@ const TabsDemo = () => {
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
           value="tab1"
         >
-          Validators in era
+          Validators in the era
         </Tabs.Trigger>
         <Tabs.Trigger
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
@@ -55,25 +55,24 @@ const TabsDemo = () => {
           className="bg-slate-200 grow px-4 p-2 data-[state=active]:bg-blue-200"
           value="tab4"
         >
-          Reward
+          Rewards
         </Tabs.Trigger>
       </Tabs.List>
 
-
-      <Tabs.Content className="bg-green-100 px-4 p-2" value="tab0">
-        Tab 1 content
+      <Tabs.Content className="px-4 p-2" value="tab0">
+        Tab 0 Content
       </Tabs.Content>
-      <Tabs.Content className="bg-yellow-100 px-4 p-2" value="tab1">
-        Tab 2 content
+      <Tabs.Content className="px-4 p-2" value="tab1">
+        Tab 0 Content
       </Tabs.Content>
-      <Tabs.Content className="bg-blue-100 px-4 p-2" value="tab2">
-        Tab 3 content
+      <Tabs.Content className="px-4 p-2" value="tab2">
+        Tab 0 Content
       </Tabs.Content>
-      <Tabs.Content className="bg-red-100 px-4 p-2" value="tab3">
-        Tab 3 content
+      <Tabs.Content className="px-4 p-2" value="tab3">
+        Tab 0 Content
       </Tabs.Content>
-      <Tabs.Content className="bg-gray-100 px-4 p-2" value="tab4">
-        Tab 3 content
+      <Tabs.Content className="px-4 p-2" value="tab4">
+        Tab 0 Content
       </Tabs.Content>
     </Tabs.Root>
   );
