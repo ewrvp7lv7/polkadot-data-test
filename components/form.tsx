@@ -17,6 +17,8 @@ export const AddressForm: FunctionComponent<IConfig> = ({
     // We don't want the page to refresh
     event.preventDefault()
 
+    setFields([]);
+
     const formData = new FormData(event.currentTarget)
 
     switch (value) {
